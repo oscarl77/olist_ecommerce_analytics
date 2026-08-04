@@ -151,6 +151,21 @@ models:
 
       - name: order_delivered_customer_date
         description: "Timestamp when the order was delivered to the customer"
-        
+
       - name: order_estimated_delivery_date
         description: "Estimated delivery date for the order"
+  
+  - name: stg__product_category_name_translation
+    description: "Lookup table translating Portuguese product categories to English."
+    columns:
+      - name: product_category_name_pt
+        description: "Primary key / Portuguese category name."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_category_name_en
+        description: "English translation of the category name."
+        tests:
+          - unique
+          - not_null
