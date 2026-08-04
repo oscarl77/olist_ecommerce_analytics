@@ -201,3 +201,20 @@ models:
 
       - name: product_width_cm
         description: "Width of the product in centimeters"
+
+  - name: stg__sellers
+    description: "Staging model for sellers data"
+    columns:
+      - name: seller_id
+        description: "Unique identifier for each seller"
+        tests:
+          - not_null
+      
+      - name: seller_zip_code_prefix
+        description: "Zip code prefix for the seller's location"
+      
+      - name: seller_city
+        description: "City where the seller is located"
+
+      - name: seller_state
+        description: "State where the seller is located"
