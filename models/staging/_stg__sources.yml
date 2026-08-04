@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: raw_olist
+    description: "Raw data from Olist e-commerce platform"
+    tables:
+      - name: customers
+        description: "Customer information"
+      - name: geolocation
+        description: "Geolocation data for customers and sellers"
+      - name: orders
+        description: "Order details"
+      - name: order_items
+        description: "Items in each order"
+      - name: order_payments
+        description: "Payment transactions"
+      - name: order_reviews
+        description: "Customer reviews for orders"
+      - name: products
+        description: "Product catalog"
+      - name: sellers
+        description: "Seller information"
+      - name: product_category_name_translation
+        description: "Translation of product category names"

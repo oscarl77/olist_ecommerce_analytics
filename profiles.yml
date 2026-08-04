@@ -1,0 +1,12 @@
+olist_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: olist-ecommerce-504511
+      dataset: dbt_dev
+      threads: 4
+      keyfile: ./gcp-key.json
+      timeout_seconds: 300
+      location: EU
