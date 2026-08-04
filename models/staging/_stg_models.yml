@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: stg__customers
+    description: "Staging model for customers data"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_unique_id
+        description: "Unique identifier for each customer across multiple orders"
+        tests:
+          - not_null
