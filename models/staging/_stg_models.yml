@@ -45,3 +45,29 @@ models:
         description: "Freight value for shipping the item"
         tests:
           - not_null
+
+  - name: stg__order_payments
+    description: "Staging model for order payments data"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+      - name: payment_sequential
+        description: "Sequential number of the payment for the order"
+        tests:
+          - not_null
+      - name: payment_type
+        description: "Type of payment (e.g., credit card, boleto, voucher)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['credit_card', 'boleto', 'voucher', 'debit_card', 'not_defined']
+      - name: payment_installments
+        description: "Number of installments for the payment"
+        tests:
+          - not_null
+      - name: payment_value
+        description: "Total value of the payment"
+        tests:
+          - not_null
