@@ -71,3 +71,32 @@ models:
         description: "Total value of the payment"
         tests:
           - not_null
+
+  - name: stg__order_reviews
+    description: "Staging model for order reviews data"
+    columns:
+      - name: review_id
+        description: "Unique identifier for each review"
+        tests:
+          - not_null
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+      - name: review_score
+        description: "Score given in the review (1 to 5)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              quote: false
+      - name: review_comment_title
+        description: "Title of the review comment"
+      - name: review_comment_message
+        description: "Message of the review comment"
+      - name: review_creation_date
+        description: "Date when the review was created"
+        tests:
+          - not_null
+      - name: review_answer_timestamp
+        description: "Timestamp when the review was answered by the seller"
