@@ -9,8 +9,9 @@ models:
         tests:
           - unique
           - not_null
-
       - name: customer_unique_id
         description: "Unique identifier for each customer across multiple orders"
         tests:
           - not_null
+      
+  
