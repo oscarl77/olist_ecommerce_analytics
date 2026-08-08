@@ -1,0 +1,220 @@
+version: 2
+
+models:
+  - name: stg__customers
+    description: "Staging model for customers data"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_unique_id
+        description: "Unique identifier for each customer across multiple orders"
+        tests:
+          - not_null
+      
+  - name: stg__order_items
+    description: "Staging model for order items data"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+
+      - name: order_item_id
+        description: "Unique identifier for each item in an order"
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Unique identifier for each product"
+        tests:
+          - not_null
+
+      - name: seller_id
+        description: "Unique identifier for each seller"
+        tests:
+          - not_null
+
+      - name: shipping_limit_date
+        description: "The date by which the item should be shipped"
+        tests:
+          - not_null
+
+      - name: price
+        description: "Price of the item"
+        tests:
+          - not_null
+
+      - name: freight_value
+        description: "Freight value for shipping the item"
+        tests:
+          - not_null
+
+  - name: stg__order_payments
+    description: "Staging model for order payments data"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+
+      - name: payment_sequential
+        description: "Sequential number of the payment for the order"
+        tests:
+          - not_null
+
+      - name: payment_type
+        description: "Type of payment (e.g., credit card, boleto, voucher)"
+        tests:
+          - not_null
+
+          - accepted_values:
+              values: ['credit_card', 'boleto', 'voucher', 'debit_card', 'not_defined']
+      - name: payment_installments
+        description: "Number of installments for the payment"
+        tests:
+          - not_null
+
+      - name: payment_value
+        description: "Total value of the payment"
+        tests:
+          - not_null
+
+  - name: stg__order_reviews
+    description: "Staging model for order reviews data"
+    columns:
+      - name: review_id
+        description: "Unique identifier for each review"
+        tests:
+          - not_null
+
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+
+      - name: review_score
+        description: "Score given in the review (1 to 5)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              quote: false
+
+      - name: review_comment_title
+        description: "Title of the review comment"
+
+      - name: review_comment_message
+        description: "Message of the review comment"
+
+      - name: review_creation_date
+        description: "Date when the review was created"
+        tests:
+          - not_null
+
+      - name: review_answer_timestamp
+        description: "Timestamp when the review was answered by the seller"
+
+  - name: stg__orders
+    description: "Staging model for orders data"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Unique identifier for each customer"
+        tests:
+          - not_null
+
+      - name: order_status
+        description: "Current status of the order (e.g., delivered, shipped, canceled)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['approved', 'canceled', 'created', 'delivered', 'invoiced', 'processing', 'shipped', 'unavailable']
+
+      - name: order_purchase_timestamp
+        description: "Timestamp when the order was purchased"
+        tests:
+          - not_null
+
+      - name: order_approved_at
+        description: "Timestamp when the order was approved"
+
+      - name: order_delivered_carrier_date
+        description: "Timestamp when the order was delivered to the carrier"
+
+      - name: order_delivered_customer_date
+        description: "Timestamp when the order was delivered to the customer"
+
+      - name: order_estimated_delivery_date
+        description: "Estimated delivery date for the order"
+  
+  - name: stg__product_category_name_translation
+    description: "Lookup table translating Portuguese product categories to English."
+    columns:
+      - name: product_category_name_pt
+        description: "Primary key / Portuguese category name."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_category_name_en
+        description: "English translation of the category name."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg__products
+    description: "Staging model for products data"
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product"
+        tests:
+          - not_null
+
+      - name: product_category_name
+        description: "Category of the product"
+
+      - name: product_name_length
+        description: "Length of the product name"
+
+      - name: product_description_length
+        description: "Length of the product description"
+
+      - name: product_photos_qty
+        description: "Quantity of photos available for the product"
+
+      - name: product_weight_g
+        description: "Weight of the product in grams"
+
+      - name: product_length_cm
+        description: "Length of the product in centimeters"
+
+      - name: product_height_cm
+        description: "Height of the product in centimeters"
+
+      - name: product_width_cm
+        description: "Width of the product in centimeters"
+
+  - name: stg__sellers
+    description: "Staging model for sellers data"
+    columns:
+      - name: seller_id
+        description: "Unique identifier for each seller"
+        tests:
+          - not_null
+      
+      - name: seller_zip_code_prefix
+        description: "Zip code prefix for the seller's location"
+      
+      - name: seller_city
+        description: "City where the seller is located"
+
+      - name: seller_state
+        description: "State where the seller is located"
