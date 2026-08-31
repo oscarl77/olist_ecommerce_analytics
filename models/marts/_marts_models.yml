@@ -1,0 +1,158 @@
+version: 2
+
+models:
+
+  - name: fct_orders
+    description: "Fact table for orders"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_unique_id
+        description: "Unique identifier for each customer across multiple orders"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_unique_id
+
+      - name: order_status
+        description: "Current status of the order (e.g., delivered, canceled)"
+        tests:
+          - accepted_values:
+              values: ['approved', 'canceled', 'created', 'delivered', 'invoiced', 'processing', 'shipped', 'unavailable']
+
+      - name: order_purchase_timestamp
+        description: "Timestamp when the order was placed"
+
+      - name: order_delivered_customer_date
+        description: "Timestamp when the order was delivered to the customer"
+
+      - name: delivery_time_lead_days
+        description: "Number of days between order purchase and delivery to the customer"
+
+      - name: total_item_quantity
+        description: "Total number of items in the order"
+
+      - name: total_item_cost_brl
+        description: "Total cost of items in the order in BRL"
+
+      - name: total_freight_value_brl
+        description: "Total freight value for the order in BRL"
+
+      - name: total_order_value_brl
+        description: "Total value of the order in BRL, including items and freight"
+      
+      - name: primary_payment_type
+        description: "Primary payment type used for the order (e.g., credit_card, boleto, voucher)"
+
+  - name: dim_customers
+    description: "Dimension table for customers"
+    columns:
+      - name: customer_unique_id
+        description: "Unique identifier for each customer across multiple orders"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_city
+        description: "City of the customer"
+
+      - name: customer_state
+        description: "State of the customer"
+
+      - name: first_order_timestamp
+        description: "Timestamp of the first order placed by the customer"
+
+      - name: most_recent_order_timestamp
+        description: "Timestamp of the most recent order placed by the customer"
+
+      - name: lifetime_orders
+        description: "Total number of orders placed by the customer"
+
+      - name: lifetime_spend_brl
+        description: "Total spend in BRL by the customer across all orders"
+
+      - name: average_order_value_brl
+        description: "Average order value in BRL for the customer"
+      
+      - name: tenure_days
+        description: "Tenure of the customer in days since their first order"
+
+      - name: is_repeat_customer
+        description: "Indicator if the customer has placed more than one order"
+        tests:
+          - accepted_values:
+              values: [true, false]
+              quote: false
+  
+  - name: mart_monthly_revenue
+    description: "Monthly aggregation of realised revenue, order volume and month-over-month growth metrics"
+    columns:
+      - name: order_purchase_month
+        description: "First calendar day of the purchase month"
+        tests:
+          - unique
+          - not_null
+      
+      - name: total_orders
+        description: "Total number of delivered orders placed in the month"
+        tests:
+          - not_null
+      
+      - name: total_customers
+        description: "Total number of customers with delivered orders in the month"
+        tests:
+          - not_null
+      
+      - name: gross_revenue_brl
+        description: "Sum of item costs for all delivered orders in Brazilian Real (BRL)"
+        tests:
+          - not_null
+      
+      - name: avg_order_value_brl
+        description: "Average gross merchandise value per order in BRL"
+        tests:
+          - not_null
+
+      - name: mom_revenue_growth_pct
+        description: "Month-over-month revenue growth as a percentage of the previous month"
+      
+  - name: mart_delivery_performance
+    description: "Monthyl aggregation of logistics performance, transit times and SLA compliance sliced by customer_state"
+    columns:
+      - name: order_purchase_month
+        description: "First calendar day of the purchase month"
+        tests:
+          - not_null
+      
+      - name: customer_state
+        description: "Brazilian state for which order was delivered to"
+        tests:
+          - not_null
+
+      - name: total_orders_delivered
+        description: "Total orders delivered per month and state"
+        tests:
+          - not_null
+          
+      - name: avg_transit_days
+        description: "Average transit days per month and state"
+        tests:
+          - not_null
+
+      - name: avg_estimated_transit_days
+        description: "Average estimated transit days per month and state"
+        tests:
+          - not_null
+
+      - name: on_time_delivery_rate_pct
+        description: "Percentage of deliveries delivered on time per month and state"
+        tests:
+          - not_null
+
+      - name: avg_delay_days_late_orders
+        description: "Average number of days late given the orders were delayed"
