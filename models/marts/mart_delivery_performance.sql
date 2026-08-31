@@ -13,6 +13,7 @@ WITH order_level_delays AS (
   JOIN {{ ref("dim_customers") }} c
     ON o.customer_unique_id = c.customer_unique_id
   WHERE order_status = 'delivered'
+    AND order_purchase_timestamp >= '2017-01-01'
     AND order_delivered_customer_date IS NOT NULL
 )
 
