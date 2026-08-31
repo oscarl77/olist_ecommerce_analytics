@@ -6,6 +6,7 @@ WITH initial_order_info AS (
     o.order_status,
     o.order_purchase_timestamp,
     o.order_delivered_customer_date,
+    o.order_estimated_delivery_date,
     TIMESTAMP_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY) AS delivery_lead_time_days
   FROM {{ ref('stg__orders') }} o
   JOIN {{ ref('stg__customers') }} c
@@ -61,6 +62,7 @@ SELECT
   i.order_status,
   i.order_purchase_timestamp,
   i.order_delivered_customer_date,
+  i.order_estimated_delivery_date,
   i.delivery_lead_time_days,
 
   COALESCE(items.item_count, 0) AS total_item_quantity,

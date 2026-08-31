@@ -120,3 +120,39 @@ models:
 
       - name: mom_revenue_growth_pct
         description: "Month-over-month revenue growth as a percentage of the previous month"
+      
+  - name: mart_delivery_performance
+    description: "Monthyl aggregation of logistics performance, transit times and SLA compliance sliced by customer_state"
+    columns:
+      - name: order_purchase_month
+        description: "First calendar day of the purchase month"
+        tests:
+          - not_null
+      
+      - name: customer_state
+        description: "Brazilian state for which order was delivered to"
+        tests:
+          - not_null
+
+      - name: total_orders_delivered
+        description: "Total orders delivered per month and state"
+        tests:
+          - not_null
+          
+      - name: avg_transit_days
+        description: "Average transit days per month and state"
+        tests:
+          - not_null
+
+      - name: avg_estimated_transit_days
+        description: "Average estimated transit days per month and state"
+        tests:
+          - not_null
+
+      - name: on_time_delivery_rate_pct
+        description: "Percentage of deliveries delivered on time per month and state"
+        tests:
+          - not_null
+
+      - name: avg_delay_days_late_orders
+        description: "Average number of days late given the orders were delayed"
