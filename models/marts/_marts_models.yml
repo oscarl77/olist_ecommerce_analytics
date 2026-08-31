@@ -88,3 +88,35 @@ models:
           - accepted_values:
               values: [true, false]
               quote: false
+  
+  - name: mart_monthly_revenue
+    description: "Monthly aggregation of realised revenue, order volume and month-over-month growth metrics"
+    columns:
+      - name: order_purchase_month
+        description: "First calendar day of the purchase month"
+        tests:
+          - unique
+          - not_null
+      
+      - name: total_orders
+        description: "Total number of delivered orders placed in the month"
+        tests:
+          - not_null
+      
+      - name: total_customers
+        description: "Total number of customers with delivered orders in the month"
+        tests:
+          - not_null
+      
+      - name: gross_revenue_brl
+        description: "Sum of item costs for all delivered orders in Brazilian Real (BRL)"
+        tests:
+          - not_null
+      
+      - name: avg_order_value_brl
+        description: "Average gross merchandise value per order in BRL"
+        tests:
+          - not_null
+
+      - name: mom_revenue_growth_pct
+        description: "Month-over-month revenue growth as a percentage of the previous month"
