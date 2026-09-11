@@ -20,6 +20,7 @@ An end-to-end data engineering and BI solution built on 100k+ Brazilian e-commer
        │
        ▼
 [ Looker Studio ]
+```
 
 ## Dashboard Architecture
 
