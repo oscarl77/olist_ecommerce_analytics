@@ -7,6 +7,7 @@ WITH monthly_metrics AS (
     ROUND(AVG(total_item_cost_brl), 2) AS avg_order_value_brl
   FROM {{  ref("fct_orders") }}
   WHERE order_status = 'delivered'
+    AND order_purchase_timestamp >= '2017-01-01'
   GROUP BY 1   
 )
 

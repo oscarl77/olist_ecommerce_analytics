@@ -19,6 +19,9 @@ models:
               to: ref('dim_customers')
               field: customer_unique_id
 
+      - name: customer_state
+        description: "State of the customer"
+
       - name: order_status
         description: "Current status of the order (e.g., delivered, canceled)"
         tests:
@@ -48,6 +51,9 @@ models:
       
       - name: primary_payment_type
         description: "Primary payment type used for the order (e.g., credit_card, boleto, voucher)"
+
+      - name: review_score
+        description: "Score out of 5 provided by a customer in a review"
 
   - name: dim_customers
     description: "Dimension table for customers"
@@ -149,10 +155,10 @@ models:
         tests:
           - not_null
 
-      - name: on_time_delivery_rate_pct
-        description: "Percentage of deliveries delivered on time per month and state"
+      - name: late_delivery_rate_pct
+        description: "Percentage of deliveries delivered late per month and state"
         tests:
           - not_null
 
-      - name: avg_delay_days_late_orders
+      - name: avg_delay_days_when_late
         description: "Average number of days late given the orders were delayed"
