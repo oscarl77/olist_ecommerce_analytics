@@ -24,7 +24,8 @@ An end-to-end data engineering and BI solution built on 100k+ Brazilian e-commer
 ## Dashboard Architecture
 
 ### Page 1: Commercial Overview & Demand
-![Page 1 - Commercial Overview](page1_commercial_overview.png)
+![Page 1 - Commercial Overview]<img width="1920" height="1080" alt="page1_commercial_overview" src="https://github.com/user-attachments/assets/e21bbd3b-6985-4a8a-b61b-8386d6a5db6b" />
+
 
 * **Tier 1 (KPI Scorecards):** Total GMV, Total Delivered Orders, Unique Active Buyers, Overall Average Order Value (AOV).
 * **Tier 2 (Trends):** Monthly Revenue & Order Volume (Combo Chart) alongside Unique Customer Trajectory.
