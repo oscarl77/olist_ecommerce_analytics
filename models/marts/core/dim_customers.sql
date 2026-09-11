@@ -42,7 +42,7 @@ latest_customer_locations AS (
 SELECT
   m.customer_unique_id,
   l.customer_city,
-  l.customer_state,
+  CONCAT('BR-', l.customer_state) AS customer_state,
   m.first_order_timestamp,
   m.most_recent_order_timestamp,
   m.lifetime_orders,

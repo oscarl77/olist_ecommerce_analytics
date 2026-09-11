@@ -3,11 +3,16 @@ WITH initial_order_info AS (
   SELECT
     o.order_id,
     c.customer_unique_id,
+    CONCAT('BR-', c.customer_state) AS customer_state,
     o.order_status,
     o.order_purchase_timestamp,
     o.order_delivered_customer_date,
     o.order_estimated_delivery_date,
-    TIMESTAMP_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY) AS delivery_lead_time_days
+    CASE 
+      WHEN o.order_status = 'delivered' AND o.order_delivered_customer_date IS NOT NULL 
+      THEN TIMESTAMP_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY)
+      ELSE NULL 
+    END AS delivery_lead_time_days
   FROM {{ ref('stg__orders') }} o
   JOIN {{ ref('stg__customers') }} c
     ON o.customer_id = c.customer_id
@@ -59,6 +64,7 @@ payments_aggregated AS (
 SELECT
   i.order_id,
   i.customer_unique_id,
+  i.customer_state,
   i.order_status,
   i.order_purchase_timestamp,
   i.order_delivered_customer_date,
