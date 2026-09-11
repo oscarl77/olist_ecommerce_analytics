@@ -70,9 +70,13 @@ SELECT
   COALESCE(items.total_freight_cost_brl, 0) AS total_freight_cost_brl,
 
   COALESCE(pay.total_order_value_brl, 0) AS total_order_value_brl,
-  COALESCE(pay.primary_payment_type, 'unassigned') AS primary_payment_type
+  COALESCE(pay.primary_payment_type, 'unassigned') AS primary_payment_type,
+
+  r.review_score 
 FROM initial_order_info i
 LEFT JOIN order_items_aggregated items
   ON i.order_id = items.order_id
 LEFT JOIN payments_aggregated pay
   ON i.order_id = pay.order_id
+LEFT JOIN {{ ref('stg__order_reviews') }} r
+  ON i.order_id = r.order_id
